@@ -37,7 +37,7 @@ const Hourlyforecast = ({ hourlyData }) => {
       {/* Left Angle (moved outward) */}
       <button
         onClick={scrollLeft}
-        className="absolute left-[-10px] top-1/2 -translate-y-1/2 
+        className="absolute left-0 top-1/2 -translate-y-1/2 
                    bg-green-500 text-white rounded-full w-9 h-9 
                    flex items-center justify-center shadow-md"
       >
@@ -47,7 +47,7 @@ const Hourlyforecast = ({ hourlyData }) => {
       {/* Right Angle (moved outward) */}
       <button
         onClick={scrollRight}
-        className="absolute right-[-10px] top-1/2 -translate-y-1/2 
+        className="absolute right-0 top-1/2 -translate-y-1/2 
                    bg-green-500 text-white rounded-full w-9 h-9 
                    flex items-center justify-center shadow-md"
       >
