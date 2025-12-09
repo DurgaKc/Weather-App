@@ -1,50 +1,57 @@
-import React from "react";
-import img from "../assets/cloud.jpeg";
-import "./Hourlyforecast.css";
-import { FaAngleLeft } from "react-icons/fa";
-import { FaAngleRight } from "react-icons/fa";
+import React, { useRef } from "react";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
-const Hourlyforecast = () => {
+const Hourlyforecast = ({ hourlyData }) => {
+  const scrollRef = useRef(null);
+
+  const scrollLeft = () => {
+    scrollRef.current.scrollBy({ left: -200, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    scrollRef.current.scrollBy({ left: 200, behavior: "smooth" });
+  };
+
   return (
-    <div className="mt-6">
+    <div className="mt-6 relative">
+      {/* Scrollable Images */}
       <div
-        className="flex gap-4 mx-6 py-6 overflow-x-auto scrollbar-hidden"
-        style={{ scrollBehavior: "smooth" }}
+        ref={scrollRef}
+        className="flex gap-4 mx-9 py-9 overflow-x-auto scrollbar-hidden"
       >
-        {/* one hour */}
-        <div className="flex flex-col items-center shadow-lg bg-green-100 py-2 rounded px-4">
-          <p className="pb-2 font-semibold">14:00</p>
-          <img src={img} alt="weather icon" className="w-20 h-20 mx-auto" />
-          <p className="pt-2 font-semibold">2&deg;C</p>
-        </div>
-        <div className="flex flex-col items-center shadow-lg bg-green-100 py-2 rounded px-4">
-          <p className="pb-2 font-semibold">14:00</p>
-          <img src={img} alt="weather icon" className="w-20 h-20 mx-auto" />
-          <p className="pt-2 font-semibold">2&deg;C</p>
-        </div>
-        <div className="flex flex-col items-center shadow-lg bg-green-100 py-2 rounded px-4">
-          <p className="pb-2 font-semibold">14:00</p>
-          <img src={img} alt="weather icon" className="w-20 h-20 mx-auto" />
-          <p className="pt-2 font-semibold">2&deg;C</p>
-        </div>
-        <div className="flex flex-col items-center shadow-lg bg-green-100 py-2 rounded px-4">
-          <p className="pb-2 font-semibold">14:00</p>
-          <img src={img} alt="weather icon" className="w-20 h-20 mx-auto" />
-          <p className="pt-2 font-semibold">2&deg;C</p>
-        </div>
-        <div className="flex flex-col items-center shadow-lg bg-green-100 py-2 rounded px-4">
-          <p className="pb-2 font-semibold">14:00</p>
-          <img src={img} alt="weather icon" className="w-20 h-20 mx-auto" />
-          <p className="pt-2 font-semibold">2&deg;C</p>
-        </div>
+        {hourlyData.map((hour, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-center shadow-lg bg-green-100 
+                       py-3 rounded px-6 min-w-[107px]"
+          >
+            <p className="pb-3 font-semibold text-lg">
+              {new Date(hour.time).getHours()}:00
+            </p>
+            <img src={hour.condition.icon} alt="weather" className="h-20" />
+            <p className="pt-2 font-semibold text-lg">{hour.temp_c}°C</p>
+          </div>
+        ))}
       </div>
-      {/* scrollbar buttons */}
-      <button className="absolute left-0 top-1/2 bg-green-500 text-white transform -translate-y-1/2 rounded-full w-8 h-8 flex items-center justify-center">
-        <FaAngleLeft className="w-4 h-4" />
-        
+
+      {/* Left Angle (moved outward) */}
+      <button
+        onClick={scrollLeft}
+        className="absolute left-[-10px] top-1/2 -translate-y-1/2 
+                   bg-green-500 text-white rounded-full w-9 h-9 
+                   flex items-center justify-center shadow-md"
+      >
+        <FaAngleLeft />
       </button>
-      <button className="absolute right-0 top-1/2 bg-green-500 text-white transform -translate-y-1/2 rounded-full w-8 h-8 flex items-center justify-center">
-        <FaAngleRight className="w-4 h-4" />
+
+      {/* Right Angle (moved outward) */}
+      <button
+        onClick={scrollRight}
+        className="absolute right-[-10px] top-1/2 -translate-y-1/2 
+                   bg-green-500 text-white rounded-full w-9 h-9 
+                   flex items-center justify-center shadow-md"
+      >
+        <FaAngleRight />
       </button>
     </div>
   );
